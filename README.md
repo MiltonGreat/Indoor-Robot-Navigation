@@ -1,14 +1,6 @@
 # Indoor Robot Navigation with Reinforcement Learning
 
-This project explores data obtained from navigating a real robot in indoor settings. The dataset is instrumental for developing navigation algorithms, performing feature engineering, and implementing reinforcement learning (RL) models to train a robot to adapt and navigate autonomously.
-
-### Overview
-
-The primary objective of this project is to process robot navigation data and use it to train machine learning and reinforcement learning models. These models aim to:
-
-- Predict the surface type (smooth or rough).
-- Train a robot to navigate effectively using RL algorithms like Proximal Policy Optimization (PPO).
-- Visualize important metrics and insights from the navigation data.
+This project delves into the intersection of robotics and machine learning, leveraging Reinforcement Learning (RL) to enable autonomous robot navigation in indoor environments. By combining surface type classification with the Proximal Policy Optimization (PPO) algorithm, the project demonstrates how robots can adapt dynamically to varying terrains and obstacles, paving the way for smarter navigation systems.
 
 ### Dataset
 
@@ -24,21 +16,73 @@ The dataset consists of JSON files that record robot sensor data during navigati
 
 The dataset contains a total of 13,139 records combined from smooth and rough surfaces.
 
-### Feature Engineering
+### Problem Statement
 
-The following features were engineered:
+Robots navigating real-world environments face challenges like dynamic terrains, unforeseen obstacles, and the need for real-time decision-making. Traditional rule-based navigation systems lack the adaptability to handle these complexities, leading to inefficiencies and safety risks.
 
-- min_dist, mean_dist, max_dist: Minimum, average, and maximum distances from obstacles.
-- speed_ratio: Ratio of left-wheel speed to right-wheel speed.
-- surface_encoded: Numerical encoding for surface types.
+This project addresses the following challenges:
 
-### Machine Learning Model
+    Classifying surfaces (smooth or rough) to adjust navigation strategies dynamically.
+    Enabling robots to learn navigation policies autonomously using RL.
+    Ensuring safe and efficient movement through a custom-designed reward system.
 
-A Random Forest Classifier was trained to predict surface types using the engineered features. Key results:
+### Solution Approach
 
-- Accuracy: 87%
-- Precision: 86% for smooth surfaces, 87% for rough surfaces.
-- Recall: 90% for smooth surfaces, 82% for rough surfaces.
+Step 1: Surface Type Prediction
+- Objective: Classify surfaces as smooth or rough using sensor data to adjust movement strategies dynamically.
+- Methodology:
+  - Trained a supervised machine learning model on raw sensor data.
+  - Applied preprocessing techniques like normalization and feature extraction.
+
+Step 2: Reinforcement Learning with PPO
+- Algorithm: Proximal Policy Optimization (PPO).
+- Workflow:
+  - Initialized the environment with obstacles, varying surfaces, and predefined goals.
+  - Allowed the robot to interact with the environment, receiving rewards for safe and goal-oriented navigation.
+  - Updated the robot's policy iteratively to maximize cumulative rewards.
+
+Step 3: Custom OpenAI Gym Environment
+- Key Features:
+  - Simulated indoor environments with smooth and rough surfaces.
+  - Integrated real-world sensor data for encoding states and dynamics.
+  - Implemented a reward system encouraging safe, efficient, and goal-oriented navigation.
+
+Step 4: Designing Rewards and Actions
+- Action Space:
+  - Brake: Avoid collisions.
+  - Move Forward: Navigate in the current direction.
+  - Turn: Adjust direction to avoid obstacles.
+
+- Reward System:
+  - Positive Rewards: Reaching goals and avoiding collisions.
+  - Negative Rewards: Collisions and leaving the navigation area.
+  - Neutral Rewards: Penalties for idle or inefficient actions.
+
+Step 5: Visualization and Evaluation
+- Visual Insights:
+  - Trajectories: Displayed the robot's navigation patterns.
+  - Surface Type Distribution: Showed the balance between smooth and rough surface data points.
+  - Brake Usage: Highlighted the frequency of brake applications for safety analysis.
+
+- Metrics:
+  - Evaluated learning progress through cumulative rewards per episode.
+  - Monitored goal-reaching success rates to ensure effective navigation.
+
+### Visualization
+
+Key visualizations include:
+
+- Surface type distribution.
+- Brake usage frequency.
+- Scatter plot of wheel speeds by surface type.
+- Distribution of minimum, mean, and maximum distances.
+  
+### Results
+
+The project successfully implemented:
+
+- Surface type prediction using Random Forest with 87% accuracy.
+- Reinforcement learning for autonomous navigation using PPO.
 
 ### Reinforcement Learning
 
@@ -52,21 +96,12 @@ An RL environment was defined with:
 
 The model was trained for 10,000 timesteps to optimize navigation performance.
 
-### Visualization
+### Future Directions
 
-Key visualizations include:
-
-- Surface type distribution.
-- Brake usage frequency.
-- Scatter plot of wheel speeds by surface type.
-- Distribution of minimum, mean, and maximum distances.
-
-### Results
-
-The project successfully implemented:
-
-- Surface type prediction using Random Forest with 87% accuracy.
-- Reinforcement learning for autonomous navigation using PPO.
+1. Real-World Testing: Deploy the trained agent in real robotic systems.
+2. Enhanced Environment Complexity: Introduce more diverse terrains and dynamic obstacles.
+3. Multi-Agent Collaboration: Explore RL techniques for coordinating multiple robots.
+4. Energy Optimization: Incorporate energy consumption as a factor in navigation strategies.
 
 ### Source
 
